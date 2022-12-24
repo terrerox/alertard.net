@@ -30,7 +30,8 @@ const createSlug = (str) => {
 }
 
 export const convertTimestampToDate = (timestamp) => {
-    return timestamp
+    const date = new Date(timestamp);
+    return date.toLocaleString('en-US')
 }
 
 export const extractDataOfCaption = (caption) => {
