@@ -35,8 +35,8 @@ watchEffect(
                 <h1 itemProp="headline">{{postStore.post.title}}</h1>
                 <p>{{postStore.post.date}}</p>
             </header>
-            <section v-show="postStore.post.image_url">
-                <img :src="postStore.post.image_url" class="post-image"/>
+            <section class="image-section" v-show="postStore.post.image_url">
+                <img :src="postStore.post.image_url"/>
             </section>
             <section
                 itemProp="articleBody"
