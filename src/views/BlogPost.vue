@@ -22,11 +22,14 @@ watchEffect(
 </script>
 <template>
     <Layout :title="siteTitle" :location="location">
+        <div v-if="postStore.isLoading" class="loader">
+            <img src="../assets/loader.gif"/>
+        </div>
         <article
             class="blog-post"
             itemScope
             itemType="http://schema.org/Article"
-            v-if="!postStore.isLoading"
+            v-else
         >
             <header>
                 <h1 itemProp="headline">{{postStore.post.title}}</h1>

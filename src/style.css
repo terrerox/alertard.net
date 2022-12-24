@@ -331,6 +331,12 @@ a:focus {
   margin-bottom: var(--spacing-8);
 }
 
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Media queries */
 
 @media (max-width: 42rem) {

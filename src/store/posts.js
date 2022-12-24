@@ -11,6 +11,7 @@ export const usePostStore = defineStore('posts', {
   }),
   actions: {
     getAll() {
+        this.isLoading = true
         return fetch(`https://graph.facebook.com/v14.0/17841413817530260?fields=media%7Btimestamp%2C%20caption%2C%20id%2C%20%20thumbnail_url%7D&access_token=${import.meta.env.VITE_INSTAGRAM_ACCESS_TOKEN}`)
         .then(res => {
             return res.json();
@@ -35,6 +36,7 @@ export const usePostStore = defineStore('posts', {
           })
     },
     getOne(id) {
+        this.isLoading = true
         return fetch(`https://graph.facebook.com/v14.0/${id}?fields=caption%2Cthumbnail_url%2Ctimestamp&access_token=${import.meta.env.VITE_INSTAGRAM_ACCESS_TOKEN}`)
         .then(res => {
             return res.json();
