@@ -1,22 +1,23 @@
 <script setup>
-import { ref, onMounted, watchEffect } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { useRoute } from 'vue-router';
 import { usePostStore } from '../store/posts'
 
 import Bio from "../components/Bio.vue"
 import Layout from '../components/Layout.vue' 
-
 const route = useRoute()
-const { id } = route.query
-const location = route.fullPath
 
+const location = route.fullPath
 const siteTitle = ref('Alerta Los Frailes')
 
 const postStore = usePostStore()
 
-watchEffect(() => {
-    postStore.getOne(id);
-});
+watchEffect(
+    () => {
+        const { id } = route.query
+        postStore.getOne(id);
+    }
+);
 
 </script>
 <template>
