@@ -4,7 +4,7 @@ import { convertTimestampToDate, extractDataOfCaption } from '../helpers'
 export const usePostStore = defineStore('posts', {
   state: () => ({ 
     isLoading: true,
-    posts: [],
+    posts: [] || JSON.parse(localStorage.getItem('posts')),
     post: {},
     next: {},
     previous: {}
@@ -27,7 +27,9 @@ export const usePostStore = defineStore('posts', {
               }
             })
             // set the response data
-            this.isLoading = false,
+            this.isLoading = false
+            const postArray = JSON.stringify(posts);
+            localStorage.setItem('posts',  postArray);
             this.posts = posts;
             return posts
           })
@@ -50,14 +52,11 @@ export const usePostStore = defineStore('posts', {
           })
     },
     calculateNextAndPreviousPost(id) {
-        this.getAll()
-            .then(posts => {
-                const index = posts.findIndex(post => post.id === id)
-                const previousPost = index === 0 ? null : posts[index - 1]
-                const nextPost = index === posts.length - 1 ? null : posts[index + 1]
-                this.previous = previousPost
-                this.next = nextPost
-            })
+        const index = this.posts.findIndex(post => post.id === id)
+        const previousPost = index === 0 ? null : this.posts[index - 1]
+        const nextPost = index === this.posts.length - 1 ? null : this.posts[index + 1]
+        this.previous = previousPost
+        this.next = nextPost
     }
   },
 })
