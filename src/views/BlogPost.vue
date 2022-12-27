@@ -35,11 +35,11 @@ watchEffect(
                 <p>{{postStore.post.date}}</p>
             </header>
             <section class="media-section" v-show="postStore.post.media_url">
-                <img :src="postStore.post.media_url" v-if="postStore.post.media_type === 'IMAGE'"/>
-                <video controls v-else>
+                <video controls v-if="postStore.post.media_type === 'VIDEO'">
                     <source :src="postStore.post.media_url" type="video/mp4">
                     Your browser does not support HTML video.
                 </video>
+                <img :src="postStore.post.media_url" v-else/>
             </section>
             <section
                 itemProp="articleBody"
