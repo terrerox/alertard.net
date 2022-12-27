@@ -264,11 +264,11 @@ a:focus {
   margin-top: var(--spacing-8);
 }
 
-.image-section {
+.media-section {
   display: flex;
 }
 
-.image-section > img {
+.media-section > img, .media-section > video {
   width: 630px;
   height: 474px;
 }

@@ -9,7 +9,7 @@ import Post from '../components/Post.vue'
 const route = useRoute()
 const location = route.fullPath
 
-const siteTitle = ref('Alerta Los Frailes')
+const siteTitle = ref('Alerta RD')
 
 const postStore = usePostStore()
 

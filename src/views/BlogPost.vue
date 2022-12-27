@@ -3,12 +3,11 @@ import { ref, watchEffect } from 'vue'
 import { useRoute } from 'vue-router';
 import { usePostStore } from '../store/posts'
 
-import Bio from "../components/Bio.vue"
 import Layout from '../components/Layout.vue' 
 const route = useRoute()
 
 const location = route.fullPath
-const siteTitle = ref('Alerta Los Frailes')
+const siteTitle = ref('Alerta RD')
 
 const postStore = usePostStore()
 
@@ -35,8 +34,12 @@ watchEffect(
                 <h1 itemProp="headline">{{postStore.post.title}}</h1>
                 <p>{{postStore.post.date}}</p>
             </header>
-            <section class="image-section" v-show="postStore.post.image_url">
-                <img :src="postStore.post.image_url"/>
+            <section class="media-section" v-show="postStore.post.media_url">
+                <img :src="postStore.post.media_url" v-if="postStore.post.media_type === 'IMAGE'"/>
+                <video controls v-else>
+                    <source :src="postStore.post.media_url" type="video/mp4">
+                    Your browser does not support HTML video.
+                </video>
             </section>
             <section
                 itemProp="articleBody"
@@ -44,9 +47,6 @@ watchEffect(
                 {{ postStore.post.description }}
             </section>
             <hr />
-            <footer>
-                <Bio />
-            </footer>
         </article>
         <nav className="blog-post-nav" v-show="!postStore.isLoading">
         <ul

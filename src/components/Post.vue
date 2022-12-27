@@ -18,8 +18,8 @@ defineProps({
             </h2>
             <small>{{post.date}}</small>
         </header>
-        <section class="image-section" v-show="post.image_url">
-            <img :src="post.image_url"/>
+        <section class="media-section" v-show="post.media_url">
+            <img :src="post.media_url"/>
         </section>
         <section>
             <p>

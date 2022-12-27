@@ -23,7 +23,7 @@ const fullYear = new Date().getFullYear()
       </main>
       <footer>
         © {{fullYear}}
-        <a target="_black" href="https://www.instagram.com/alertalosfrailes/">Alerta Los Frailes</a>
+        <a target="_black" href="https://www.instagram.com/alertalosfrailes/">Alerta RD</a>
       </footer>
     </div>
 </template>
