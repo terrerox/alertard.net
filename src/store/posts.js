@@ -1,47 +1,55 @@
 import { defineStore } from 'pinia'
-import { convertTimestampToDate, extractDataOfCaption } from '../helpers'
+import { request, assignArraySections } from '../helpers'
 
 export const usePostStore = defineStore('posts', {
   state: () => ({ 
     isLoading: true,
-    posts: [] || JSON.parse(localStorage.getItem('posts')),
-    post: {},
-    next: {},
-    previous: {}
+    heroPosts: [] || JSON.parse(localStorage.getItem('posts')), 
+    leftPosts: [] || JSON.parse(localStorage.getItem('posts')), 
+    rightPosts: [] || JSON.parse(localStorage.getItem('posts')), 
+    leftOver: [] || JSON.parse(localStorage.getItem('posts')),
+    mainPost: {} || JSON.parse(localStorage.getItem('mainPost'))
   }),
   actions: {
-    getAll() {
+    async getAll() {
         this.isLoading = true
-        return fetch(`https://graph.facebook.com/v14.0/17841413817530260?fields=media%7Bcaption%2Cmedia_type%2Cmedia_url%2Ctimestamp%2C%20thumbnail_url%7D&access_token=${import.meta.env.VITE_INSTAGRAM_ACCESS_TOKEN}`)
-        .then(res => {
-            return res.json();
-        })
-        .then(json => {
-            const posts = json.media.data.map(post => {
-              const { 
-                id, 
-                caption, 
-                thumbnail_url,  
-                timestamp,
-                media_type,
-                media_url
-              } = post
-              const data = extractDataOfCaption(caption)
-              return {
-                id,
-                media_url: thumbnail_url || media_url,
-                media_type,
-                ...data,
-                date: convertTimestampToDate(timestamp)
+        const posts = await request({
+          query: `
+          {
+            allPosts {
+              id
+              title
+              slug
+              description
+              preview
+              mediaType
+              mediaUrl {
+                url
               }
-            })
-            // set the response data
-            this.isLoading = false
-            const postArray = JSON.stringify(posts);
-            localStorage.setItem('posts',  postArray);
-            this.posts = posts;
-            return posts
-          })
+              instagramMediaUrl
+              instagramThumbnailUrl
+              datetime
+            }
+          }
+          `,
+          variables: {},
+          preview: false,
+        });
+
+        const {
+          heroPosts, 
+          leftPosts, 
+          rightPosts, 
+          leftOver,
+          mainPost
+        } = assignArraySections(posts.allPosts)
+
+        this.isLoading = false
+        this.heroPosts = heroPosts;
+        this.leftPosts = leftPosts;
+        this.rightPosts = rightPosts;
+        this.leftOver = leftOver;
+        this.mainPost = mainPost;
     },
     getOne(id) {
         this.isLoading = true

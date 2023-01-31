@@ -1,69 +1,75 @@
-const isUpper = (char) => { 
-    const titleArray = char.split(" ")
-    const firstWord = titleArray[0]
-    let rtn = false;
-    if (firstWord === firstWord.toUpperCase()) rtn = true;
-    return rtn;
-}
+import axios from 'axios'
 
-const truncateText = (text) => {
-    const MAX_LENGTH = 140;
-    return text.substring(0, MAX_LENGTH) + '...';
-}
+export async function request({ query, variables, preview }) {
+  const endpoint = preview
+    ? `https://graphql.datocms.com/preview`
+    : `https://graphql.datocms.com/`
 
-const createSlug = (str) => {
-    str = str.replace(/^\s+|\s+$/g, ''); // trim
-    str = str.toLowerCase();
-
-    // remove accents, swap ñ for n, etc
-    var from = "ãàáäâáº½èéëêìíïîõòóöôùúüûñç·/_,:;";
-    var to   = "aaaaaeeeeeiiiiooooouuuuncn-----";
-    for (var i=0, l=from.length ; i<l ; i++) {
-         str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
-    }
-
-    str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-    .replace(/\s+/g, '-') // collapse whitespace and replace by -
-    .replace(/-+/g, '-'); // collapse dashes
-
-    return str;
-}
-
-export const convertTimestampToDate = (timestamp) => {
-    const date = new Date(timestamp);
-    return date.toLocaleString('pt-br', { hour12: true })
-}
-
-export const extractDataOfCaption = (caption) => {
-    if(!caption) return
-    let title = '', description = '', km, preview, slug, counter = 0
-
-    const captionArray = caption.split("\n")
-    
-    for(const text of captionArray) {
-      const uppercaseText = text.toUpperCase()
-      
-      //if(uppercaseText.includes("KM")) {
-      //  km = text
-      //  continue
-      //}
-      if(isUpper(text) && text !== '' && counter < 1) {
-    	  title += text + " "
-        slug = createSlug(title)
-        counter++
-        continue
+  const { data } = await axios.post(
+    endpoint,
+    {
+      query,
+      variables
+    },
+    {
+      headers: {
+        Authorization:
+          `Bearer ${import.meta.env.VITE_DATOCMS_API_TOKEN}`
       }
-      if(text === '') continue 
-      preview = truncateText(text)
-      description += text + " "
     }
-    
-    return {
-      km,
-      title,
-      slug,
-      description,
-      preview
+  )
+
+  if (data.errors) {
+    throw JSON.stringify(data.errors);
+  }
+
+  return data.data;
+}
+
+export function assignArraySections(posts) {
+  const heroPosts = [], 
+        leftPosts = [], 
+        rightPosts = [], 
+        leftOver = []
+
+  let mainPost = {}
+
+  for (const [index, post] of posts.entries()) {
+    if (index < 4) {
+      heroPosts.push(post)
+      continue
     }
+
+    if (index < 7) {
+      rightPosts.push(post)
+      continue
+    }
+
+    if (index < 9) {
+      leftPosts.push(post)
+      continue
+    }
+
+    if (index < 10) {
+      mainPost = post
+      continue
+    }
+
+    leftOver.push(post)
+  }
+
+  localStorage.setItem('heroPosts',  JSON.stringify(heroPosts))
+  localStorage.setItem('leftPosts',  JSON.stringify(leftPosts))
+  localStorage.setItem('rightPosts',  JSON.stringify(rightPosts))
+  localStorage.setItem('leftOver',  JSON.stringify(leftOver))
+  localStorage.setItem('mainPost',  JSON.stringify(mainPost))
+
+  return {
+    heroPosts, 
+    leftPosts, 
+    rightPosts, 
+    leftOver,
+    mainPost
+  }
 }
   
