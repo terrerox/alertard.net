@@ -2,6 +2,7 @@
 import { usePostStore } from '../store/posts'
 
 const postStore = usePostStore()
+const advertisment = postStore.advertisment
 
 const assignClass = (index) => {
     return (index === 0 && 'mb-3') || (index === 1 && 'mb-3 pb-3 border-bottom') || ''
@@ -13,7 +14,7 @@ const assignClass = (index) => {
             <div class="small" style="background-color: rgba(0,0,0,0.05)"><span
                     class="text-muted font-alegreya">ADVERTISMENT</span></div>
             <div class="py-2">
-                <img src="img/banners/banner-300x100.jpg" class="img-fluid" />
+                <img :src="advertisment.image.url" class="img-fluid" />
             </div>
         </div>
         <div 

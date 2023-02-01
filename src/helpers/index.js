@@ -26,6 +26,18 @@ export async function request({ query, variables, preview }) {
   return data.data;
 }
 
+export function assignPromotionSections(promotion) {
+  let banner = {}, side = {}, advertisment = {}
+  banner = promotion.find(promotion => promotion.spot === 'BANNER')
+  side = promotion.find(promotion => promotion.spot === 'SIDE')
+  advertisment = promotion.find(promotion => promotion.spot === 'ADVERTISMENT')
+
+  return {
+    banner,
+    side,
+    advertisment
+  }
+}
 export function assignArraySections(posts) {
   const heroPosts = [], 
         leftPosts = [], 

@@ -1,14 +1,18 @@
 import { defineStore } from 'pinia'
-import { request, assignArraySections } from '../helpers'
+import { request, assignArraySections, assignPromotionSections } from '../helpers'
 
 export const usePostStore = defineStore('posts', {
   state: () => ({ 
     isLoading: true,
-    heroPosts: [] || JSON.parse(localStorage.getItem('posts')), 
-    leftPosts: [] || JSON.parse(localStorage.getItem('posts')), 
-    rightPosts: [] || JSON.parse(localStorage.getItem('posts')), 
-    leftOver: [] || JSON.parse(localStorage.getItem('posts')),
-    mainPost: {} || JSON.parse(localStorage.getItem('mainPost'))
+    heroPosts: [] || JSON.parse(localStorage.getItem('heroPosts')), 
+    leftPosts: [] || JSON.parse(localStorage.getItem('leftPosts')), 
+    rightPosts: [] || JSON.parse(localStorage.getItem('rightPosts')), 
+    leftOver: [] || JSON.parse(localStorage.getItem('leftOver')),
+    mainPost: {} || JSON.parse(localStorage.getItem('mainPost')),
+
+    banner: {},
+    sidePromotion: {},
+    advertisment: {}
   }),
   actions: {
     async getAll() {
@@ -30,6 +34,12 @@ export const usePostStore = defineStore('posts', {
               instagramThumbnailUrl
               datetime
             }
+            allPromotions{
+              spot
+              image {
+                url
+              }
+            }
           }
           `,
           variables: {},
@@ -43,8 +53,19 @@ export const usePostStore = defineStore('posts', {
           leftOver,
           mainPost
         } = assignArraySections(posts.allPosts)
+        
+        const {
+          banner,
+          side,
+          advertisment
+        } = assignPromotionSections(posts.allPromotions)
 
         this.isLoading = false
+
+        this.banner = banner;
+        this.sidePromotion = side;
+        this.advertisment = advertisment;
+
         this.heroPosts = heroPosts;
         this.leftPosts = leftPosts;
         this.rightPosts = rightPosts;
