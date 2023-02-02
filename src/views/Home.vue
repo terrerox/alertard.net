@@ -3,7 +3,6 @@ import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router';
 import { usePostStore } from '../store/posts'
 import Hero from '../components/Hero.vue'
-import Header from '../components/Header.vue'
 import Post from '../components/Post.vue'
 
 import CenterSection from '../components/CenterSection.vue'
@@ -21,14 +20,13 @@ const siteTitle = ref('Alerta RD')
 
 const postStore = usePostStore()
 
-onMounted(async() => {
+onMounted(() => {
   postStore.getAll();
 });
 
 </script>
 
 <template>
-  <Header />
   <div v-if="postStore.isLoading" class="loader" style="margin-top: 5%;">
     <img src="../assets/loader.gif" />
   </div>

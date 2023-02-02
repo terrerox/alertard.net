@@ -15,7 +15,9 @@ header{
   background-color: #c83030;
   color: #fff;
 }
-
+router-link{
+  text-decoration: none;
+}
 section{
   /*font-size: 0.9375rem;*/
   line-height: 1.25em;
@@ -49,7 +51,7 @@ section{
   width: 46px;
   line-height: 46px;
   text-align: center;
-  background-color: rgba(19,149,186,1);
+  background-color: #c83030;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -65,9 +67,9 @@ section{
   bottom: 0;
   height: 4px;
   right: 0px;
-  background: -moz-linear-gradient(left, rgba(19,149,186,1) 0%, rgba(69,225,239,0.6) 100%);
-  background: -webkit-linear-gradient(left, rgba(19,149,186,1) 0%,rgba(69,225,239,0.6) 100%);
-  background: linear-gradient(to right, rgba(19,149,186,1) 0%,rgba(69,225,239,0.6) 100%);
+  background: -moz-linear-gradient(left, rgb(186, 19, 19) 0%, rgba(239, 69, 69, 0.6) 100%);
+  background: -webkit-linear-gradient(left, rgb(186, 19, 19) 0%,rgba(239, 69, 69, 0.6) 100%);
+  background: linear-gradient(to right, rgb(186, 19, 19) 0%,rgba(239, 69, 69, 0.6) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#34ace0', endColorstr='#9945e1ef',GradientType=1 );
 }
 .gradient-back{
@@ -154,8 +156,36 @@ section{
   text-align: center;
   margin: auto;
 }
-.navbar-nav > li{
+.media-section {
+  display: flex;
+  flex-wrap: wrap;
+}
 
+.media-section > img, .media-section > video {
+  width: 1140px;
+  height: 750px;
+}
+
+.media-responsive {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+.entry-content {
+  margin-top: 0;
+  font-size: 20px;
+  line-height: 1.75;
+  letter-spacing: 0.7px;
+  color: #444;
+  font-weight: 400;
+}
+
+.entry-content > p {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
 }
 .navbar-nav > li > a{
   display: block;
@@ -203,6 +233,10 @@ section{
   font-weight: 400;
   line-height: 1.125em;
   margin-bottom: 0.5rem;
+}
+
+.post-title:hover{
+  color:#595959;
 }
 .post-content{
   line-height: 1.45rem;
@@ -279,7 +313,9 @@ section{
   opacity: 1;
 }
 
-
+.post-title, .post-media {
+  cursor: pointer;
+}
 .widget-posts{
   position: relative;
   overflow: hidden;
@@ -407,10 +443,23 @@ section{
   display: block;
 }
 
+.main-title{
+  color: white;
+  font-size:x-large;
+  font-weight: 800;
+  cursor: pointer;
+  margin: 1% 0 1% 0;
+}
+.main-title:hover{
+  color: white;
+  text-decoration: none;
+}
 
-
-
-
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .article-title{
 }
 .article-title h1{

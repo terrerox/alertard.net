@@ -1,76 +1,60 @@
 <script setup>
-import { ref, watchEffect } from 'vue'
-import { useRoute } from 'vue-router';
+import { onMounted , ref } from 'vue'
 import { usePostStore } from '../store/posts'
-
-import Layout from '../components/Layout.vue' 
-const route = useRoute()
-
-const location = route.fullPath
-const siteTitle = ref('Alerta RD')
+import { useRoute } from 'vue-router';
 
 const postStore = usePostStore()
+const route = useRoute()
 
-watchEffect(
+onMounted (
     () => {
-        const { id } = route.query
-        postStore.getOne(id);
+        const { slug } = route.params
+        postStore.getOne(slug);
     }
 );
-
 </script>
 <template>
-    <Layout :title="siteTitle" :location="location">
-        <div v-if="postStore.isLoading" class="loader">
-            <img src="../assets/loader.gif"/>
+    <section class="section">
+        <div v-if="postStore.isLoading" class="loader" style="margin-top: 5%;">
+            <img src="../assets/loader.gif" />
         </div>
-        <article
-            class="blog-post"
-            itemScope
-            itemType="http://schema.org/Article"
-            v-else
-        >
-            <header>
-                <h1 itemProp="headline">{{postStore.post.title}}</h1>
-                <p>{{postStore.post.date}}</p>
-            </header>
-            <section class="media-section" v-show="postStore.post.media_url">
-                <video controls v-if="postStore.post.media_type === 'VIDEO'">
-                    <source :src="postStore.post.media_url" type="video/mp4">
-                    Your browser does not support HTML video.
-                </video>
-                <img :src="postStore.post.media_url" v-else/>
-            </section>
-            <section
-                itemProp="articleBody"
-            >
-                {{ postStore.post.description }}
-            </section>
-            <hr />
-        </article>
-        <nav className="blog-post-nav" v-show="!postStore.isLoading">
-        <ul
-            :style="{
-                display: `flex`,
-                flexWrap: `wrap`,
-                justifyContent: `space-between`,
-                listStyle: `none`,
-                padding: 0,
-            }"
-        >
-          <li v-if="postStore.previous">
-              <router-link :to="{ path: `/${postStore.previous.slug}`, query: { id: postStore.previous.id }}" rel="prev">
-                ← {{postStore.previous.title}}
-              </router-link>
-          </li>
-          <li v-if="postStore.next">
-              <router-link :to="{ path: `/${postStore.next.slug}`, query: { id: postStore.next.id }}" rel="next">
-                {{postStore.next.title}} →
-              </router-link>
-          </li>
-        </ul>
-      </nav>
-    </Layout>
+        <main class="container" v-else>
+            <div class="row">
+                <div class="col-xl-9 col-lg-8">
+                    <article class="blog-post" itemScope itemType="http://schema.org/Article">
+                        <div class="article-title">
+                            <h1 itemProp="headline">{{ postStore.post.title }}</h1>
+                        </div>
+                        <p>{{ postStore.post.datetime }}</p>
+                        <section class="media-section" v-show="postStore.post.instagramMediaUrl">
+                            <video class="media-responsive" controls v-if="postStore.post.mediaType === 'VIDEO'">
+                                <source :src="postStore.post.instagramMediaUrl" type="video/mp4">
+                                Your browser does not support HTML video.
+                            </video>
+                            <img class="media-responsive" :src="postStore.post.instagramMediaUrl" v-else />
+                        </section>
+                        <section itemProp="articleBody" class="entry-content">
+                           <p> {{ postStore.post.description }} </p>
+                        </section>
+                        <hr />
+                    </article>
+                </div>
+                <div class="col-xl-3 col-lg-4">
+                    <div class="sticky-sidebar">
+                        <div class="sticky-inside">
+                            <div class="banner banner-sidebar mb-3 bg-light text-center">
+                                <img :src="postStore.sidePromotion.image.url" class="img-fluid" />
+                            </div>
+                            <div class="widget-posts gradient-back text-white bg-light px-3 pb-3 pt-1 shadow ">
+
+                                <div class="widget-header">
+                                    <div class="widget-title">Promocionate aquí</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </section>
 </template>
-
-

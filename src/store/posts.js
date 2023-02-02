@@ -10,14 +10,41 @@ export const usePostStore = defineStore('posts', {
     leftOver: [] || JSON.parse(localStorage.getItem('leftOver')),
     mainPost: {} || JSON.parse(localStorage.getItem('mainPost')),
 
+    post: {} || JSON.parse(localStorage.getItem('post')),
+
     banner: {},
     sidePromotion: {},
     advertisment: {}
   }),
   actions: {
+    async getPromotions() {
+      const promotions = await request({
+        query: `
+        {
+          allPromotions{
+            spot
+            image {
+              url
+            }
+          }
+        }
+        `,
+        variables: {},
+        preview: false,
+      })
+      const {
+        banner,
+        side,
+        advertisment
+      } = assignPromotionSections(promotions.allPromotions)
+
+      this.banner = banner;
+      this.sidePromotion = side;
+      this.advertisment = advertisment;
+    },
     async getAll() {
         this.isLoading = true
-        const posts = await request({
+        const postsRequest = await request({
           query: `
           {
             allPosts {
@@ -34,18 +61,12 @@ export const usePostStore = defineStore('posts', {
               instagramThumbnailUrl
               datetime
             }
-            allPromotions{
-              spot
-              image {
-                url
-              }
-            }
           }
           `,
           variables: {},
           preview: false,
         });
-
+        const [posts] = await Promise.all([postsRequest, this.getPromotions()])
         const {
           heroPosts, 
           leftPosts, 
@@ -53,59 +74,36 @@ export const usePostStore = defineStore('posts', {
           leftOver,
           mainPost
         } = assignArraySections(posts.allPosts)
-        
-        const {
-          banner,
-          side,
-          advertisment
-        } = assignPromotionSections(posts.allPromotions)
-
-        this.isLoading = false
-
-        this.banner = banner;
-        this.sidePromotion = side;
-        this.advertisment = advertisment;
 
         this.heroPosts = heroPosts;
         this.leftPosts = leftPosts;
         this.rightPosts = rightPosts;
         this.leftOver = leftOver;
         this.mainPost = mainPost;
+
+        this.isLoading = false
     },
-    getOne(id) {
+    async getOne(slug) {
         this.isLoading = true
-        return fetch(`https://graph.facebook.com/v14.0/${id}?fields=caption%2Cthumbnail_url%2Ctimestamp%2Cmedia_type%2Cmedia_url&access_token=${import.meta.env.VITE_INSTAGRAM_ACCESS_TOKEN}`)
-        .then(res => {
-            return res.json();
-        })
-        .then(json => {
-            const { 
-              id, 
-              caption, 
-              thumbnail_url,  
-              timestamp,
-              media_type,
-              media_url
-            } = json
-            const data = extractDataOfCaption(caption)
-            const res = {
-              date: convertTimestampToDate(timestamp),
-              media_url,
-              media_type,
-              ...data
-            };
-            console.log(res)
-            this.calculateNextAndPreviousPost(id)
-            this.post = res;
-            this.isLoading = false
-          })
+        const postRequest = request({
+          query: `
+          query getPost($slug: String) {
+            post (filter: { slug: { eq: $slug }}) {
+              title
+              description
+              datetime
+              mediaType
+              instagramMediaUrl
+            }
+          }
+          `,
+          variables: { slug },
+          preview: false,
+        });
+        const [post] = await Promise.all([postRequest, this.getPromotions()])
+        localStorage.setItem('post',  JSON.stringify(post))
+        this.post = post.post;
+        this.isLoading = false
     },
-    calculateNextAndPreviousPost(id) {
-        const index = this.posts.findIndex(post => post.id === id)
-        const previousPost = index === 0 ? null : this.posts[index - 1]
-        const nextPost = index === this.posts.length - 1 ? null : this.posts[index + 1]
-        this.previous = previousPost
-        this.next = nextPost
-    }
   },
 })

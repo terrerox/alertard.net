@@ -16,9 +16,9 @@
             </div>
           </div>
         </div>
-        <div class="col-12 col-lg-6 text-center">
+        <router-link to="/" class="col-12 col-lg-6 text-center main-title">
           Alerta RD
-        </div>
+        </router-link>
         <div class="col-12 col-lg-3 text-center text-lg-right">
           @alertalosfrailes
         </div>

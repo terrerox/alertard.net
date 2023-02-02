@@ -1,6 +1,11 @@
 <script setup>
 import { usePostStore } from '../store/posts'
+import { useRouter } from 'vue-router';
+const router = useRouter()
 
+function goToPost(slug) { 
+  router.push({ path: slug })
+}
 const postStore = usePostStore()
 const sidePromotion = postStore.sidePromotion
 const [postOne, postTwo, ...restOfPosts] = postStore.leftOver
@@ -14,7 +19,7 @@ const sidePosts = [postOne, postTwo]
                 <div class="col-xl-12">
                     <div class="section-header row">
                         <div class="col-12">
-                            <h2 class="section-title h4 font-weight-bold font-alegreya">WORLD</h2>
+                            <h2 class="section-title h4 font-weight-bold font-alegreya">MÁS NOTICIAS</h2>
                         </div>
                     </div>
                 </div>
@@ -32,12 +37,12 @@ const sidePosts = [postOne, postTwo]
                                 v-for="post in sidePosts"
                                 :key="post.slug"
                             >
-                                <div class="post-media">
+                                <div class="post-media" @click="goToPost(post.slug)">
                                     <img class="img-fluid" :src="post.instagramMediaUrl" />
                                 </div>
                                 <div class="post-header">
                                     <div class="post-supertitle">CATEGORY</div>
-                                    <div class="post-title h4 font-weight-bold">{{ post.title }}</div>
+                                    <div class="post-title h4 font-weight-bold" @click="goToPost(post.slug)">{{ post.title }}</div>
                                 </div>
                                 <div class="post-body">
                                     <div class="post-content">{{ post.preview }}</div>
@@ -57,13 +62,13 @@ const sidePosts = [postOne, postTwo]
                             >
                                 <div class="row">
                                     <div class="col-auto">
-                                        <div class="post-media">
+                                        <div class="post-media" @click="goToPost(post.slug)">
                                             <img :src="post.instagramMediaUrl" width="100">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="post-header">
-                                            <div class="post-title h5 font-weight-bold">{{ post.title }}</div>
+                                            <div class="post-title h5 font-weight-bold" @click="goToPost(post.slug)">{{ post.title }}</div>
                                         </div>
                                         <div class="post-body">
                                             <div class="post-content">{{ post.preview }}</div>
@@ -100,11 +105,11 @@ const sidePosts = [postOne, postTwo]
                                     v-for="(post, index) in postStore.heroPosts"
                                     :key="post.slug"
                                 >
-                                    <div class="post-media float-left mr-3">
+                                    <div class="post-media float-left mr-3" @click="goToPost(post.slug)">
                                         <img :src="post.instagramThumbnailUrl" width="75" />
                                     </div>
                                     <div class="post-header">
-                                        <div class="post-title h6 font-weight-bold">{{ post.title }}</div>
+                                        <div class="post-title h6 font-weight-bold" @click="goToPost(post.slug)">{{ post.title }}</div>
                                     </div>
                                 </div>
                             </div>

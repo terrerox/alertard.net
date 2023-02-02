@@ -1,6 +1,11 @@
 <script setup>
 import { usePostStore } from '../store/posts'
+import { useRouter } from 'vue-router';
+const router = useRouter()
 
+function goToPost(slug) { 
+  router.push({ path: slug })
+}
 const postStore = usePostStore()
 </script>
 <template>
@@ -14,7 +19,7 @@ const postStore = usePostStore()
         >
             <div class="post-header">
                 <div class="post-supertitle">CATEGORY</div>
-                <div class="post-title h4 font-weight-bold">{{ post.title }}</div>
+                <div class="post-title h4 font-weight-bold" @click="goToPost(post.slug)">{{ post.title }}</div>
             </div>
             <div class="post-body">
                 <div class="post-content">{{ post.preview }}</div>

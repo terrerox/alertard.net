@@ -1,6 +1,11 @@
 <script setup>
 import { usePostStore } from '../store/posts'
+import { useRouter } from 'vue-router';
+const router = useRouter()
 
+function goToPost(slug) { 
+  router.push({ path: slug })
+}
 const postStore = usePostStore()
 const advertisment = postStore.advertisment
 
@@ -23,11 +28,11 @@ const assignClass = (index) => {
             v-for="(post, index) in postStore.rightPosts"
             :key="post.slug"
         >
-            <div class="post-media float-left mr-3">
+            <div class="post-media float-left mr-3" @click="goToPost(post.slug)">
                 <img :src="post.instagramThumbnailUrl" width="75" />
             </div>
             <div class="post-header">
-                <div class="post-title h5 font-weight-bold">{{ post.title }}</div>
+                <div class="post-title h5 font-weight-bold" @click="goToPost(post.slug)">{{ post.title }}</div>
             </div>
             <div class="post-body">
                 <div class="post-content">{{ post.preview }}</div>
