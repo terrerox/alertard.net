@@ -38,7 +38,8 @@ export function assignPromotionSections(promotion) {
     advertisment
   }
 }
-export function assignArraySections(posts) {
+export function assignArraySections(rawPosts) {
+  const posts = mapPosts(rawPosts)
   const heroPosts = [], 
         leftPosts = [], 
         rightPosts = [], 
@@ -83,5 +84,34 @@ export function assignArraySections(posts) {
     leftOver,
     mainPost
   }
+}
+
+function mapPosts(posts) {
+  return posts.map(post => {
+    const {
+      datetime,
+      description,
+      id,
+      instagramMediaUrl,
+      instagramThumbnailUrl,
+      mediaType,
+      mediaUrl,
+      preview,
+      slug,
+      title,
+    } = post
+    return {
+      datetime, 
+      description, 
+      id,
+      instagramMediaUrl, 
+      instagramThumbnailUrl: instagramThumbnailUrl || instagramMediaUrl, 
+      mediaType, 
+      mediaUrl,
+      preview, 
+      slug, 
+      title,
+    }
+  })
 }
   

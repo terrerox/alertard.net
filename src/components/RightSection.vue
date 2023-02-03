@@ -1,13 +1,14 @@
 <script setup>
 import { usePostStore } from '../store/posts'
 import { useRouter } from 'vue-router';
+
+import Advertisment from './Promotions/Advertisment.vue';
 const router = useRouter()
 
 function goToPost(slug) { 
   router.push({ path: slug })
 }
 const postStore = usePostStore()
-const advertisment = postStore.advertisment
 
 const assignClass = (index) => {
     return (index === 0 && 'mb-3') || (index === 1 && 'mb-3 pb-3 border-bottom') || ''
@@ -15,13 +16,7 @@ const assignClass = (index) => {
 </script>
 <template>
     <div class="col-12 order-2 order-lg-3 col-sm-12 col-lg-5 col-xl-4 mb-3 mb-lg-0 ">
-        <div class="mb-5 text-center bg-hard-light">
-            <div class="small" style="background-color: rgba(0,0,0,0.05)"><span
-                    class="text-muted font-alegreya">ADVERTISMENT</span></div>
-            <div class="py-2">
-                <img :src="advertisment.image.url" class="img-fluid" />
-            </div>
-        </div>
+        <Advertisment />
         <div 
             class="post"
             :class="assignClass(index)"

@@ -1,3 +1,11 @@
+<script setup>
+const currentDate = new Date().toLocaleString('es', {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+})
+</script>
 <template>
   <header class="header py-1">
     <div class="container">
@@ -6,7 +14,7 @@
           <div class="row no-gutters">
             <div class="col-6 col-lg-12">
               <div class="font-weight-bold">
-                <i class="fa fa-calendar-o" aria-hidden="true"></i> Friday 15 Sep 2018
+                <i class="fa fa-calendar-o" aria-hidden="true"></i> {{ currentDate }}
               </div>
             </div>
             <div class="col-6 col-lg-12">

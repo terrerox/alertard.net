@@ -38,7 +38,7 @@ const sidePosts = [postOne, postTwo]
                                 :key="post.slug"
                             >
                                 <div class="post-media" @click="goToPost(post.slug)">
-                                    <img class="img-fluid" :src="post.instagramMediaUrl" />
+                                    <img class="img-fluid" :src="post.instagramThumbnailUrl" />
                                 </div>
                                 <div class="post-header">
                                     <div class="post-supertitle">CATEGORY</div>
@@ -63,7 +63,7 @@ const sidePosts = [postOne, postTwo]
                                 <div class="row">
                                     <div class="col-auto">
                                         <div class="post-media" @click="goToPost(post.slug)">
-                                            <img :src="post.instagramMediaUrl" width="100">
+                                            <img :src="post.instagramThumbnailUrl" width="100">
                                         </div>
                                     </div>
                                     <div class="col">

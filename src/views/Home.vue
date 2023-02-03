@@ -3,13 +3,12 @@ import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router';
 import { usePostStore } from '../store/posts'
 import Hero from '../components/Hero.vue'
-import Post from '../components/Post.vue'
 
 import CenterSection from '../components/CenterSection.vue'
 import LeftSection from '../components/LeftSection.vue'
 import RightSection from '../components/RightSection.vue'
 
-import PromotionBanner from '../components/PromotionBanner.vue'
+import PromotionBanner from '../components/Promotions/PromotionBanner.vue'
 
 import CategorySection from '../components/CategorySection.vue'
 
