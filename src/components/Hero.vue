@@ -1,6 +1,11 @@
 <script setup>
 import { usePostStore } from '../store/posts'
+import { useRouter } from 'vue-router';
+const router = useRouter()
 
+function goToPost(slug) { 
+  router.push({ path: slug })
+}
 const postStore = usePostStore()
 </script>
 <template>
@@ -13,10 +18,10 @@ const postStore = usePostStore()
             >
                 <div class="row align-items-center no-gutters">
                     <div class="col-auto">
-                        <img class="float-left mr-2" :src="post.instagramThumbnailUrl" width="50" />
+                        <img class="float-left mr-2" @click="goToPost(post.slug)" :src="post.instagramThumbnailUrl" width="50" />
                     </div>
                     <div class="col">
-                        <div class="font-weight-bold">{{post.title}}</div>
+                        <div class="font-weight-bold post-title" @click="goToPost(post.slug)">{{post.title}}</div>
                         <div class="post-date">
                             <i class="fa fa-clock-o" aria-hidden="true"></i> {{ post.datetime }}
                         </div>
