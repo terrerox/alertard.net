@@ -9,7 +9,7 @@ const route = useRoute()
 const router = useRouter()
 
 function goToPost(slug) { 
-  router.push({ path: `/${slug}` , replace: false })
+  router.push({ path: `/${slug}` })
 }
 
 watchEffect (
