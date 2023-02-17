@@ -454,7 +454,9 @@ section{
   color: white;
   text-decoration: none;
 }
-
+.router-link-active {
+  color: #000;
+}
 .loader {
   display: flex;
   justify-content: center;

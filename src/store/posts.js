@@ -12,6 +12,9 @@ export const usePostStore = defineStore('posts', {
 
     post: {} || JSON.parse(localStorage.getItem('post')),
 
+    postsByCategories: [],
+    category: '',
+
     banner: {},
     sidePromotion: {},
     advertisment: {}
@@ -60,6 +63,7 @@ export const usePostStore = defineStore('posts', {
               instagramMediaUrl
               instagramThumbnailUrl
               datetime
+              category
             }
           }
           `,
@@ -101,9 +105,32 @@ export const usePostStore = defineStore('posts', {
           preview: false,
         });
         const [post] = await Promise.all([postRequest, this.getPromotions()])
-        localStorage.setItem('post',  JSON.stringify(post))
+        localStorage.setItem('post',  JSON.stringify(post.post))
         this.post = post.post;
         this.isLoading = false
     },
+    async getByCategory(category) {
+      this.isLoading = true
+      const postsByCategoryRequest = request({
+        query: `
+        query getPostByCategory($category: String) {
+          allPosts (filter: { category: { eq: $category }}) {
+            title
+            description
+            datetime
+            mediaType
+            instagramMediaUrl
+            slug
+          }
+        }
+        `,
+        variables: { category },
+        preview: false,
+      });
+      const [posts] = await Promise.all([postsByCategoryRequest, this.getPromotions()])
+      this.postsByCategories = posts.allPosts;
+      this.category = category;
+      this.isLoading = false
+  },
   },
 })

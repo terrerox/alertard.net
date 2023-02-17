@@ -6,23 +6,23 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <router-link to="/" class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></router-link>
+            <li class="nav-item">
+              <router-link to="/" class="nav-link">Inicio</router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Nacionales</a>
+              <router-link to="/categoria/alertard" class="nav-link">Nacionales</router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Extranjeras</a>
+              <router-link to="/categoria/alertainternacional" class="nav-link">Extranjeras</router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Deportes</a>
+              <router-link to="/categoria/alertadeportiva" class="nav-link">Deportes</router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Curiosas</a>
+              <router-link to="/categoria/alertacuriosa" class="nav-link">Curiosas</router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Educación sexual</a>
+              <router-link to="/categoria/alertasexual" class="nav-link">Educación sexual</router-link>
             </li>
           </ul>
         </div>

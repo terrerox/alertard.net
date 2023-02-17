@@ -1,5 +1,6 @@
 <script setup>
 import { usePostStore } from '../store/posts'
+import { categoryTitles } from '../helpers';
 import { useRouter } from 'vue-router';
 const router = useRouter()
 
@@ -18,7 +19,7 @@ const postStore = usePostStore()
             :key="post.slug"
         >
             <div class="post-header">
-                <div class="post-supertitle">CATEGORY</div>
+                <div class="post-supertitle">{{ categoryTitles[post.category] }}</div>
                 <div class="post-title h4 font-weight-bold" @click="goToPost(post.slug)">{{ post.title }}</div>
             </div>
             <div class="post-body">

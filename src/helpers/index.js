@@ -86,6 +86,15 @@ export function assignArraySections(rawPosts) {
   }
 }
 
+export const categoryTitles = {
+  alertard: "Nacionales",
+  alertardnet: "Nacionales",
+  alertainternacional: "Extranjeras",
+  alertadeportiva: "Deportes",
+  alertacuriosa: "Curiosas",
+  alertasexual: "Educación Sexual",
+}
+
 function mapPosts(posts) {
   return posts.map(post => {
     const {
