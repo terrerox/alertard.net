@@ -95,7 +95,7 @@ export const categoryTitles = {
   alertasexual: "Educación Sexual",
 }
 
-function mapPosts(posts) {
+export function mapPosts(posts) {
   return posts.map(post => {
     const {
       datetime,
@@ -108,6 +108,7 @@ function mapPosts(posts) {
       preview,
       slug,
       title,
+      category
     } = post
     return {
       datetime, 
@@ -120,6 +121,7 @@ function mapPosts(posts) {
       preview, 
       slug, 
       title,
+      category
     }
   })
 }

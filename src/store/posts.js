@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { request, assignArraySections, assignPromotionSections } from '../helpers'
+import { request, assignArraySections, assignPromotionSections, mapPosts } from '../helpers'
 
 export const usePostStore = defineStore('posts', {
   state: () => ({ 
@@ -115,12 +115,19 @@ export const usePostStore = defineStore('posts', {
         query: `
         query getPostByCategory($category: String) {
           allPosts (filter: { category: { eq: $category }}) {
+            id
             title
-            description
-            datetime
-            mediaType
-            instagramMediaUrl
             slug
+            description
+            preview
+            mediaType
+            mediaUrl {
+              url
+            }
+            instagramMediaUrl
+            instagramThumbnailUrl
+            datetime
+            category
           }
         }
         `,
@@ -128,7 +135,7 @@ export const usePostStore = defineStore('posts', {
         preview: false,
       });
       const [posts] = await Promise.all([postsByCategoryRequest, this.getPromotions()])
-      this.postsByCategories = posts.allPosts;
+      this.postsByCategories = mapPosts(posts.allPosts);
       this.category = category;
       this.isLoading = false
   },

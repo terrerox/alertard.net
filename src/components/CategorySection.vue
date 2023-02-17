@@ -10,8 +10,6 @@ function goToPost(slug) {
 }
 const postStore = usePostStore()
 const sidePromotion = postStore.sidePromotion
-const [postOne, postTwo, ...restOfPosts] = postStore.leftOver
-const sidePosts = [postOne, postTwo]
 </script>
 <template>
     <section class="section">
@@ -36,7 +34,7 @@ const sidePosts = [postOne, postTwo]
                             <div 
                                 class="post"
                                 :class="[index === 0 && 'mb-3 pb-3 border-bottom']"
-                                v-for="post in sidePosts"
+                                v-for="post in postStore.leftOver.slice(0,2)"
                                 :key="post.slug"
                             >
                                 <div class="post-media" @click="goToPost(post.slug)">
@@ -58,8 +56,8 @@ const sidePosts = [postOne, postTwo]
 
                             <div 
                                 class="post mb-3 border-bottom"
-                                v-for="(post, index) in restOfPosts"
-                                :class="[(restOfPosts.length - 1) === index ? 'mb-sm-0' : 'pb-3']"
+                                v-for="(post, index) in postStore.leftOver.slice(2, postStore.leftOver.length)"
+                                :class="[(postStore.leftOver.length - 1) === index ? 'mb-sm-0' : 'pb-3']"
                                 :key="post.slug"
                             >
                                 <div class="row">
@@ -83,11 +81,6 @@ const sidePosts = [postOne, postTwo]
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="row">
-                        <div class="col-12 text-center py-3">
-                            <a href="#3" class="btn-main">READ MORE</a>
-                        </div>
-                    </div> -->
                 </div>
                 <div class="col-xl-3 col-lg-4">
                     <div class="sticky-sidebar">

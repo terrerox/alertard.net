@@ -8,7 +8,6 @@ const postStore = usePostStore()
 const route = useRoute()
 const router = useRouter()
 
-
 function goToPost(slug) { 
   router.push({ path: `/${slug}` , replace: false })
 }
@@ -46,14 +45,13 @@ watchEffect (
                             <div 
                                 class="post"
                                 :class="[index === 0 && 'mb-3 pb-3 border-bottom']"
-                                v-for="(post, index) in postStore.postsByCategories"
+                                v-for="(post, index) in postStore.postsByCategories.slice(0,2)"
                                 :key="post.slug"
                             >
                                 <div class="post-media" @click="goToPost(post.slug)">
                                     <img class="img-fluid" :src="post.instagramThumbnailUrl" />
                                 </div>
                                 <div class="post-header">
-                                    <div class="post-supertitle">CATEGORY</div>
                                     <div class="post-title h4 font-weight-bold" @click="goToPost(post.slug)">{{ post.title }}</div>
                                 </div>
                                 <div class="post-body">
@@ -68,7 +66,7 @@ watchEffect (
 
                             <div 
                                 class="post mb-3 border-bottom"
-                                v-for="(post, index) in postStore.postsByCategories"
+                                v-for="(post, index) in postStore.postsByCategories.slice(2, postStore.postsByCategories.length)"
                                 :class="[(postStore.postsByCategories.length - 1) === index ? 'mb-sm-0' : 'pb-3']"
                                 :key="post.slug"
                             >

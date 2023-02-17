@@ -1,6 +1,8 @@
 <script setup>
 import { usePostStore } from '../store/posts'
 import { useRouter } from 'vue-router';
+import { categoryTitles } from '../helpers';
+
 const router = useRouter()
 
 function goToPost(slug) { 
@@ -13,10 +15,10 @@ const mainPost = usePostStore().mainPost
 
         <div class="post">
             <div class="post-header">
-                <div class="post-supertitle">Photo by Davi Pimentel</div>
+                <div class="post-supertitle">{{ categoryTitles[mainPost.category] }}</div>
                 <div class="post-title h3 font-weight-bold" @click="goToPost(mainPost.slug)">{{ mainPost.title }}</div>
             </div>
-            <div class="post-media">
+            <div class="post-media" @click="goToPost(mainPost.slug)">
                 <img class="img-fluid" :src="mainPost.instagramThumbnailUrl" />
             </div>
             <div class="post-body">
