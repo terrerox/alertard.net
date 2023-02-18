@@ -2,6 +2,7 @@
 import { onMounted , ref } from 'vue'
 import { usePostStore } from '../store/posts'
 import { useRoute } from 'vue-router';
+import CommentsSection from '../components/CommentsSection.vue';
 
 const postStore = usePostStore()
 const route = useRoute()
@@ -38,6 +39,7 @@ onMounted (
                         </section>
                         <hr />
                     </article>
+                    <CommentsSection />
                 </div>
                 <div class="col-xl-3 col-lg-4">
                     <div class="sticky-sidebar">
