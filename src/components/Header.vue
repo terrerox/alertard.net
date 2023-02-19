@@ -25,7 +25,7 @@ const currentDate = new Date().toLocaleString('es', {
           </div>
         </div>
         <router-link to="/" class="col-12 col-lg-6 text-center main-title">
-          <img src="../assets/Logo-Alerta-rd-Blanco.png" alt="Logo alertard.net">
+          <img src="../assets/Logo-alerta-RD-fondo-rojo.jpg" alt="Logo alertard.net">
         </router-link>
         <div class="col-12 col-lg-3 text-center text-lg-right">
           @alertalosfrailes
