@@ -57,11 +57,8 @@ export const usePostStore = defineStore('posts', {
               description
               preview
               mediaType
-              mediaUrl {
-                url
-              }
-              instagramMediaUrl
-              instagramThumbnailUrl
+              mediaUrl
+              thumbnailUrl
               datetime
               category
             }
@@ -97,7 +94,7 @@ export const usePostStore = defineStore('posts', {
               description
               datetime
               mediaType
-              instagramMediaUrl
+              mediaUrl
             }
           }
           `,
@@ -121,11 +118,8 @@ export const usePostStore = defineStore('posts', {
             description
             preview
             mediaType
-            mediaUrl {
-              url
-            }
-            instagramMediaUrl
-            instagramThumbnailUrl
+            mediaUrl
+            thumbnailUrl
             datetime
             category
           }

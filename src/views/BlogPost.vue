@@ -27,12 +27,12 @@ onMounted (
                             <h1 itemProp="headline">{{ postStore.post.title }}</h1>
                         </div>
                         <p>{{ postStore.post.datetime }}</p>
-                        <section class="media-section" v-show="postStore.post.instagramMediaUrl">
+                        <section class="media-section" v-show="postStore.post.mediaUrl">
                             <video class="media-responsive" controls v-if="postStore.post.mediaType === 'VIDEO'">
-                                <source :src="postStore.post.instagramMediaUrl" type="video/mp4">
+                                <source :src="postStore.post.mediaUrl" type="video/mp4">
                                 Your browser does not support HTML video.
                             </video>
-                            <img class="media-responsive" :src="postStore.post.instagramMediaUrl" v-else />
+                            <img class="media-responsive" :src="postStore.post.mediaUrl" v-else />
                         </section>
                         <section itemProp="articleBody" class="entry-content">
                            <p> {{ postStore.post.description }} </p>

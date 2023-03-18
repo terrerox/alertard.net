@@ -49,7 +49,7 @@ watchEffect (
                                 :key="post.slug"
                             >
                                 <div class="post-media" @click="goToPost(post.slug)">
-                                    <img class="img-fluid" :src="post.instagramThumbnailUrl" />
+                                    <img class="img-fluid" :src="post.thumbnailUrl" />
                                 </div>
                                 <div class="post-header">
                                     <div class="post-title h4 font-weight-bold" @click="goToPost(post.slug)">{{ post.title }}</div>
@@ -73,7 +73,7 @@ watchEffect (
                                 <div class="row">
                                     <div class="col-auto">
                                         <div class="post-media" @click="goToPost(post.slug)">
-                                            <img :src="post.instagramThumbnailUrl" width="100">
+                                            <img :src="post.thumbnailUrl" width="100">
                                         </div>
                                     </div>
                                     <div class="col">

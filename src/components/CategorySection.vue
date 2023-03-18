@@ -38,7 +38,7 @@ const sidePromotion = postStore.sidePromotion
                                 :key="post.slug"
                             >
                                 <div class="post-media" @click="goToPost(post.slug)">
-                                    <img class="img-fluid" :src="post.instagramThumbnailUrl" />
+                                    <img class="img-fluid" :src="post.thumbnailUrl" />
                                 </div>
                                 <div class="post-header">
                                     <div class="post-supertitle">{{ categoryTitles[post.category] }}</div>
@@ -63,7 +63,7 @@ const sidePromotion = postStore.sidePromotion
                                 <div class="row">
                                     <div class="col-auto">
                                         <div class="post-media" @click="goToPost(post.slug)">
-                                            <img :src="post.instagramThumbnailUrl" width="100">
+                                            <img :src="post.thumbnailUrl" width="100">
                                         </div>
                                     </div>
                                     <div class="col">
@@ -101,7 +101,7 @@ const sidePromotion = postStore.sidePromotion
                                     :key="post.slug"
                                 >
                                     <div class="post-media float-left mr-3" @click="goToPost(post.slug)">
-                                        <img :src="post.instagramThumbnailUrl" width="75" />
+                                        <img :src="post.thumbnailUrl" width="75" />
                                     </div>
                                     <div class="post-header">
                                         <div class="post-title h6 font-weight-bold" @click="goToPost(post.slug)">{{ post.title }}</div>

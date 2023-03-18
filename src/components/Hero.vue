@@ -18,7 +18,7 @@ const postStore = usePostStore()
             >
                 <div class="row align-items-center no-gutters">
                     <div class="col-auto">
-                        <img class="float-left mr-2" @click="goToPost(post.slug)" :src="post.instagramThumbnailUrl" width="50" />
+                        <img class="float-left mr-2" @click="goToPost(post.slug)" :src="post.thumbnailUrl" width="50" />
                     </div>
                     <div class="col">
                         <div class="font-weight-bold post-title" @click="goToPost(post.slug)">{{post.title}}</div>
