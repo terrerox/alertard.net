@@ -38,7 +38,7 @@ const sidePromotion = postStore.sidePromotion
                                 :key="post.slug"
                             >
                                 <div class="post-media" @click="goToPost(post.slug)">
-                                    <img class="img-fluid" :src="post.thumbnailUrl" />
+                                    <img class="img-fluid" :src="post.mediaUrl" />
                                 </div>
                                 <div class="post-header">
                                     <div class="post-supertitle">{{ categoryTitles[post.category] }}</div>
@@ -63,7 +63,7 @@ const sidePromotion = postStore.sidePromotion
                                 <div class="row">
                                     <div class="col-auto">
                                         <div class="post-media" @click="goToPost(post.slug)">
-                                            <img :src="post.thumbnailUrl" width="100">
+                                            <img :src="post.mediaUrl" width="100">
                                         </div>
                                     </div>
                                     <div class="col">
@@ -86,7 +86,7 @@ const sidePromotion = postStore.sidePromotion
                     <div class="sticky-sidebar">
                         <div class="sticky-inside">
                             <div class="banner banner-sidebar mb-3 bg-light text-center">
-                                <img :src="sidePromotion.image.url" class="img-fluid" />
+                                <img src="sidePromotion.image.url" class="img-fluid" />
                             </div>
                             <div class="widget-posts gradient-back text-white bg-light px-3 pb-3 pt-1 shadow ">
 
@@ -101,7 +101,7 @@ const sidePromotion = postStore.sidePromotion
                                     :key="post.slug"
                                 >
                                     <div class="post-media float-left mr-3" @click="goToPost(post.slug)">
-                                        <img :src="post.thumbnailUrl" width="75" />
+                                        <img :src="post.mediaUrl" width="75" />
                                     </div>
                                     <div class="post-header">
                                         <div class="post-title h6 font-weight-bold" @click="goToPost(post.slug)">{{ post.title }}</div>

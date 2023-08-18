@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { request, assignArraySections, assignPromotionSections, mapPosts } from '../helpers'
+import { request, assignArraySections, assignImagesToSections, assignImagesToPosts, mapPosts } from '../helpers'
 
 export const usePostStore = defineStore('posts', {
   state: () => ({ 
@@ -17,17 +17,18 @@ export const usePostStore = defineStore('posts', {
 
     banner: {},
     sidePromotion: {},
-    advertisment: {}
+    advertisment: {},
+    general: {}
   }),
   actions: {
-    async getPromotions() {
-      const promotions = await request({
+    async getImages() {
+      const images = await request({
         query: `
         {
-          allPromotions{
-            spot
-            image {
-              url
+          mediaItems {
+            nodes {
+              altText
+              sourceUrl
             }
           }
         }
@@ -38,43 +39,51 @@ export const usePostStore = defineStore('posts', {
       const {
         banner,
         side,
-        advertisment
-      } = assignPromotionSections(promotions.allPromotions)
+        advertisment,
+        general
+      } = assignImagesToSections(images.mediaItems.nodes)
 
       this.banner = banner;
       this.sidePromotion = side;
       this.advertisment = advertisment;
+      this.general = general;
     },
     async getAll() {
         this.isLoading = true
         const postsRequest = await request({
           query: `
           {
-            allPosts {
-              id
-              title
-              slug
-              description
-              preview
-              mediaType
-              mediaUrl
-              thumbnailUrl
-              datetime
-              category
+            posts {
+              nodes {
+                id
+                title
+                date
+                content
+                categories {
+                  edges {
+                    node {
+                      id
+                    }
+                  }
+                }
+                slug
+              }
             }
           }
           `,
           variables: {},
           preview: false,
         });
-        const [posts] = await Promise.all([postsRequest, this.getPromotions()])
+        const [posts] = await Promise.all([postsRequest, this.getImages()])
+        const allPosts = assignImagesToPosts(posts.posts.nodes, this.general)
+        console.log(allPosts)
         const {
           heroPosts, 
           leftPosts, 
           rightPosts, 
           leftOver,
           mainPost
-        } = assignArraySections(posts.allPosts)
+        } = assignArraySections(allPosts)
 
         this.heroPosts = heroPosts;
         this.leftPosts = leftPosts;
@@ -88,13 +97,22 @@ export const usePostStore = defineStore('posts', {
         this.isLoading = true
         const postRequest = request({
           query: `
-          query getPost($slug: String) {
+          query post($slug: String) {
             post (filter: { slug: { eq: $slug }}) {
-              title
-              description
-              datetime
-              mediaType
-              mediaUrl
+              nodes {
+                id
+                title
+                date
+                content
+                categories {
+                  edges {
+                    node {
+                      id
+                    }
+                  }
+                }
+                slug
+              }
             }
           }
           `,
@@ -111,7 +129,7 @@ export const usePostStore = defineStore('posts', {
       const postsByCategoryRequest = request({
         query: `
         query getPostByCategory($category: String) {
-          allPosts (filter: { category: { eq: $category }}) {
+          posts (filter: { category: { eq: $category }}) {
             id
             title
             slug

@@ -8,8 +8,7 @@ const banner = usePostStore().banner
     <div class="container">
       <div class="row py-4">
         <div class="col text-center">
-          <img :src="banner.image.url" v-if="banner.image" class="img-fluid" />
-          <h3 v-else>Promocionate aquí</h3>
+          <img src="banner.image.url" class="img-fluid" />
         </div>
       </div>
     </div>

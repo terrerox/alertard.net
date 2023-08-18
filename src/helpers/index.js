@@ -1,9 +1,7 @@
 import axios from 'axios'
 
 export async function request({ query, variables, preview }) {
-  const endpoint = preview
-    ? `https://graphql.datocms.com/preview`
-    : `https://graphql.datocms.com/`
+  const endpoint = import.meta.env.VITE_BASE_URL
 
   const { data } = await axios.post(
     endpoint,
@@ -11,12 +9,6 @@ export async function request({ query, variables, preview }) {
       query,
       variables
     },
-    {
-      headers: {
-        Authorization:
-          `Bearer ${import.meta.env.VITE_DATOCMS_API_TOKEN}`
-      }
-    }
   )
 
   if (data.errors) {
@@ -26,16 +18,36 @@ export async function request({ query, variables, preview }) {
   return data.data;
 }
 
-export function assignPromotionSections(promotion) {
-  let banner = {}, side = {}, advertisment = {}
-  banner = promotion.find(promotion => promotion.spot === 'BANNER')
-  side = promotion.find(promotion => promotion.spot === 'SIDE')
-  advertisment = promotion.find(promotion => promotion.spot === 'ADVERTISMENT')
+export function assignImagesToPosts(posts, images) {
+  const allPosts = []
+  posts.forEach(post => {
+    const photo = images.find(img => img.altText === post.slug)
+    if(photo) {
+      allPosts.push({
+        ...post,
+        mediaUrl: photo.sourceUrl
+      })
+    }
+  })
+  return allPosts
+}
 
+export function assignImagesToSections(images) {
+  const sections = {
+    BANNER: 'BANNER',
+    SIDE: 'SIDE',
+    ADVERTISEMENT: 'ADVERTISEMENT',
+  }
+  let banner = {}, side = {}, advertisement = {}, general = {}
+  banner = images.find(img => img.altText === sections.banner)
+  side = images.find(img => img.altText === sections.side)
+  advertisement = images.find(img => img.altText === sections.advertisement)
+  general = images.filter(img => !sections[img.altText])
   return {
     banner,
     side,
-    advertisment
+    advertisement,
+    general
   }
 }
 export function assignArraySections(rawPosts) {
@@ -96,31 +108,27 @@ export const categoryTitles = {
 }
 
 export function mapPosts(posts) {
+  console.log(posts)
   return posts.map(post => {
     const {
-      datetime,
-      description,
+      content,
       id,
-      thumbnailUrl,
-      mediaType,
-      mediaUrl,
-      preview,
+      date,
       slug,
       title,
-      category
+      mediaUrl,
     } = post
     return {
-      datetime, 
-      description, 
+      datetime: date, 
+      description: content, 
       id,
-      mediaUrl, 
-      thumbnailUrl: thumbnailUrl || mediaUrl, 
-      mediaType, 
+      thumbnailUrl: 'klk', 
+      mediaType: 'klk', 
       mediaUrl,
-      preview, 
+      preview: 'klk', 
+      categoty: 'klk', 
       slug, 
       title,
-      category
     }
   })
 }

@@ -19,7 +19,7 @@ const mainPost = usePostStore().mainPost
                 <div class="post-title h3 font-weight-bold" @click="goToPost(mainPost.slug)">{{ mainPost.title }}</div>
             </div>
             <div class="post-media" @click="goToPost(mainPost.slug)">
-                <img class="img-fluid" :src="mainPost.thumbnailUrl" />
+                <img class="img-fluid" :src="mainPost.mediaUrl" />
             </div>
             <div class="post-body">
                 <div class="post-content">{{ mainPost.description }}</div>
