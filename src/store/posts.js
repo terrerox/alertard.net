@@ -76,7 +76,6 @@ export const usePostStore = defineStore('posts', {
         });
         const [posts] = await Promise.all([postsRequest, this.getImages()])
         const allPosts = assignImagesToPosts(posts.posts.nodes, this.general)
-        console.log(allPosts)
         const {
           heroPosts, 
           leftPosts, 

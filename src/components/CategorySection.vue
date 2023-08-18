@@ -86,7 +86,7 @@ const sidePromotion = postStore.sidePromotion
                     <div class="sticky-sidebar">
                         <div class="sticky-inside">
                             <div class="banner banner-sidebar mb-3 bg-light text-center">
-                                <img src="sidePromotion.image.url" class="img-fluid" />
+                                <img src="" class="img-fluid" />
                             </div>
                             <div class="widget-posts gradient-back text-white bg-light px-3 pb-3 pt-1 shadow ">
 

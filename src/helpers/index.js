@@ -108,7 +108,6 @@ export const categoryTitles = {
 }
 
 export function mapPosts(posts) {
-  console.log(posts)
   return posts.map(post => {
     const {
       content,
