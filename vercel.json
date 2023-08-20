@@ -1,15 +1,3 @@
 {
-    "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
-    "headers": [
-        {
-          "source": "/graphql",
-          "headers": [
-            {
-              "key": "Access-Control-Allow-Origin",
-              "value": "https://www.alertard.net"
-            }
-            
-          ]
-        }
-      ]
+    "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
