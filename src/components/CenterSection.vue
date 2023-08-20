@@ -5,8 +5,8 @@ import { categoryTitles } from '../helpers';
 
 const router = useRouter()
 
-function goToPost(slug) { 
-  router.push({ path: slug })
+function goToPost(post) { 
+  router.push({ path: post.slug, query: { id: post.id } })
 }
 const mainPost = usePostStore().mainPost
 </script>
@@ -18,7 +18,7 @@ const mainPost = usePostStore().mainPost
                 <div class="post-supertitle">{{ categoryTitles[mainPost.category] }}</div>
                 <div class="post-title h3 font-weight-bold" @click="goToPost(mainPost.slug)">{{ mainPost.title }}</div>
             </div>
-            <div class="post-media" @click="goToPost(mainPost.slug)">
+            <div class="post-media" @click="goToPost(mainPost)">
                 <img class="img-fluid" :src="mainPost.mediaUrl" />
             </div>
             <div class="post-body">

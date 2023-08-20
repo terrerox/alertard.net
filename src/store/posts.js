@@ -17,7 +17,7 @@ export const usePostStore = defineStore('posts', {
 
     banner: {},
     sidePromotion: {},
-    advertisment: {},
+    advertisement: {},
     general: {}
   }),
   actions: {
@@ -39,13 +39,18 @@ export const usePostStore = defineStore('posts', {
       const {
         banner,
         side,
-        advertisment,
+        advertisement,
         general
       } = assignImagesToSections(images.mediaItems.nodes)
+      console.log({
+        banner,
+        side,
+        advertisement,
+      })
 
       this.banner = banner;
       this.sidePromotion = side;
-      this.advertisment = advertisment;
+      this.advertisement = advertisement;
       this.general = general;
     },
     async getAll() {
@@ -92,35 +97,34 @@ export const usePostStore = defineStore('posts', {
 
         this.isLoading = false
     },
-    async getOne(slug) {
+    async getOne(id) {
         this.isLoading = true
         const postRequest = request({
           query: `
-          query post($slug: String) {
-            post (filter: { slug: { eq: $slug }}) {
-              nodes {
-                id
-                title
-                date
-                content
-                categories {
-                  edges {
-                    node {
-                      id
-                    }
+          query post($id: ID!) {
+            post (id: $id) {
+              id
+              title
+              date
+              content
+              categories {
+                edges {
+                  node {
+                    id
                   }
                 }
-                slug
               }
+              slug
             }
           }
           `,
-          variables: { slug },
+          variables: { id },
           preview: false,
         });
-        const [post] = await Promise.all([postRequest, this.getPromotions()])
-        localStorage.setItem('post',  JSON.stringify(post.post))
-        this.post = post.post;
+        const [post] = await Promise.all([postRequest, this.getImages()])
+        const currentPost = assignImagesToPosts([post.post], this.general)
+        localStorage.setItem('post',  JSON.stringify(currentPost[0]))
+        this.post = currentPost[0];
         this.isLoading = false
     },
     async getByCategory(category) {

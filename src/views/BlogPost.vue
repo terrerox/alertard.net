@@ -9,8 +9,8 @@ const route = useRoute()
 
 onMounted (
     () => {
-        const { slug } = route.params
-        postStore.getOne(slug);
+        const { id } = route.query
+        postStore.getOne(id);
     }
 );
 </script>
@@ -45,7 +45,7 @@ onMounted (
                     <div class="sticky-sidebar">
                         <div class="sticky-inside">
                             <div class="banner banner-sidebar mb-3 bg-light text-center">
-                                <img :src="postStore.sidePromotion.image.url" class="img-fluid" />
+                                <img :src="postStore.sidePromotion.sourceUrl" class="img-fluid" />
                             </div>
                             <div class="widget-posts gradient-back text-white bg-light px-3 pb-3 pt-1 shadow ">
 

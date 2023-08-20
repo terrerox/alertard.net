@@ -39,9 +39,9 @@ export function assignImagesToSections(images) {
     ADVERTISEMENT: 'ADVERTISEMENT',
   }
   let banner = {}, side = {}, advertisement = {}, general = {}
-  banner = images.find(img => img.altText === sections.banner)
-  side = images.find(img => img.altText === sections.side)
-  advertisement = images.find(img => img.altText === sections.advertisement)
+  banner = images.find(img => img.altText === sections.BANNER)
+  side = images.find(img => img.altText === sections.SIDE)
+  advertisement = images.find(img => img.altText === sections.ADVERTISEMENT)
   general = images.filter(img => !sections[img.altText])
   return {
     banner,

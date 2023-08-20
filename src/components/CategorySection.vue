@@ -5,8 +5,8 @@ import { categoryTitles } from '../helpers';
 
 const router = useRouter()
 
-function goToPost(slug) { 
-  router.push({ path: slug })
+function goToPost(post) { 
+  router.push({ path: post.slug, query: { id: post.id } })
 }
 const postStore = usePostStore()
 const sidePromotion = postStore.sidePromotion
@@ -37,12 +37,12 @@ const sidePromotion = postStore.sidePromotion
                                 v-for="post in postStore.leftOver.slice(0,2)"
                                 :key="post.slug"
                             >
-                                <div class="post-media" @click="goToPost(post.slug)">
+                                <div class="post-media" @click="goToPost(post)">
                                     <img class="img-fluid" :src="post.mediaUrl" />
                                 </div>
                                 <div class="post-header">
                                     <div class="post-supertitle">{{ categoryTitles[post.category] }}</div>
-                                    <div class="post-title h4 font-weight-bold" @click="goToPost(post.slug)">{{ post.title }}</div>
+                                    <div class="post-title h4 font-weight-bold" @click="goToPost(post)">{{ post.title }}</div>
                                 </div>
                                 <div class="post-body">
                                     <div class="post-content">{{ post.preview }}</div>
@@ -62,13 +62,13 @@ const sidePromotion = postStore.sidePromotion
                             >
                                 <div class="row">
                                     <div class="col-auto">
-                                        <div class="post-media" @click="goToPost(post.slug)">
+                                        <div class="post-media" @click="goToPost(post)">
                                             <img :src="post.mediaUrl" width="100">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="post-header">
-                                            <div class="post-title h5 font-weight-bold" @click="goToPost(post.slug)">{{ post.title }}</div>
+                                            <div class="post-title h5 font-weight-bold" @click="goToPost(post)">{{ post.title }}</div>
                                         </div>
                                         <div class="post-body">
                                             <div class="post-content">{{ post.preview }}</div>
@@ -100,11 +100,11 @@ const sidePromotion = postStore.sidePromotion
                                     v-for="(post, index) in postStore.heroPosts"
                                     :key="post.slug"
                                 >
-                                    <div class="post-media float-left mr-3" @click="goToPost(post.slug)">
+                                    <div class="post-media float-left mr-3" @click="goToPost(post)">
                                         <img :src="post.mediaUrl" width="75" />
                                     </div>
                                     <div class="post-header">
-                                        <div class="post-title h6 font-weight-bold" @click="goToPost(post.slug)">{{ post.title }}</div>
+                                        <div class="post-title h6 font-weight-bold" @click="goToPost(post)">{{ post.title }}</div>
                                     </div>
                                 </div>
                             </div>

@@ -4,8 +4,8 @@ import { categoryTitles } from '../helpers';
 import { useRouter } from 'vue-router';
 const router = useRouter()
 
-function goToPost(slug) { 
-  router.push({ path: slug })
+function goToPost(post) { 
+  router.push({ path: post.slug, query: { id: post.id } })
 }
 const postStore = usePostStore()
 </script>
@@ -20,7 +20,7 @@ const postStore = usePostStore()
         >
             <div class="post-header">
                 <div class="post-supertitle">{{ categoryTitles[post.category] }}</div>
-                <div class="post-title h4 font-weight-bold" @click="goToPost(post.slug)">{{ post.title }}</div>
+                <div class="post-title h4 font-weight-bold" @click="goToPost(post)">{{ post.title }}</div>
             </div>
             <div class="post-body">
                 <div class="post-content">{{ post.preview }}</div>
