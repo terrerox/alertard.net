@@ -1,3 +1,15 @@
 {
-    "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+    "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
+    "headers": [
+        {
+          "source": "https://ahb.371.myftpupload.com/graphql",
+          "headers": [
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "https://www.alertard.net"
+            }
+            
+          ]
+        }
+      ]
 }

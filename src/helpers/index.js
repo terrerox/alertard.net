@@ -2,18 +2,13 @@ import axios from 'axios'
 
 export async function request({ query, variables, preview }) {
   const endpoint = import.meta.env.VITE_BASE_URL
-  const config = {
-    headers: {
-      'Access-Control-Allow-Origin': 'https://www.alertard.net'
-    }
-  };
+
   const { data } = await axios.post(
     endpoint,
     {
       query,
       variables
     },
-    config
   )
 
   if (data.errors) {
