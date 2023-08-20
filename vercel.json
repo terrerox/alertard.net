@@ -2,7 +2,7 @@
     "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
     "headers": [
         {
-          "source": "https://ahb.371.myftpupload.com/graphql",
+          "source": "/graphql",
           "headers": [
             {
               "key": "Access-Control-Allow-Origin",
