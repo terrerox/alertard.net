@@ -1,13 +1,9 @@
 <script setup>
 import { usePostStore } from '../store/posts'
 import { useRouter } from 'vue-router';
-import { categoryTitles } from '../helpers';
+import { categoryTitles, goToPost } from '../helpers';
 
 const router = useRouter()
-
-function goToPost(post) { 
-  router.push({ path: post.slug, query: { id: post.id } })
-}
 const postStore = usePostStore()
 const sidePromotion = postStore.sidePromotion
 </script>
@@ -32,17 +28,17 @@ const sidePromotion = postStore.sidePromotion
                         <div class="col-12 col-md-5 mb-3 mb-md-0">
 
                             <div 
-                                class="post"
-                                :class="[index === 0 && 'mb-3 pb-3 border-bottom']"
                                 v-for="post in postStore.leftOver.slice(0,2)"
                                 :key="post.slug"
+                                class="post"
+                                :class="[index === 0 && 'mb-3 pb-3 border-bottom']"
                             >
-                                <div class="post-media" @click="goToPost(post)">
+                                <div class="post-media" @click="goToPost(post, router)">
                                     <img class="img-fluid" :src="post.mediaUrl" />
                                 </div>
                                 <div class="post-header">
                                     <div class="post-supertitle">{{ categoryTitles[post.category] }}</div>
-                                    <div class="post-title h4 font-weight-bold" @click="goToPost(post)">{{ post.title }}</div>
+                                    <div class="post-title h4 font-weight-bold" @click="goToPost(post, router)">{{ post.title }}</div>
                                 </div>
                                 <div class="post-body">
                                     <div class="post-content">{{ post.preview }}</div>
@@ -55,20 +51,20 @@ const sidePromotion = postStore.sidePromotion
                         <div class="col-12 col-md-7">
 
                             <div 
-                                class="post mb-3 border-bottom"
                                 v-for="(post, index) in postStore.leftOver.slice(2, postStore.leftOver.length)"
-                                :class="[(postStore.leftOver.length - 1) === index ? 'mb-sm-0' : 'pb-3']"
                                 :key="post.slug"
+                                class="post mb-3 border-bottom"
+                                :class="[(postStore.leftOver.length - 1) === index ? 'mb-sm-0' : 'pb-3']"
                             >
                                 <div class="row">
                                     <div class="col-auto">
-                                        <div class="post-media" @click="goToPost(post)">
+                                        <div class="post-media" @click="goToPost(post, router)">
                                             <img :src="post.mediaUrl" width="100">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="post-header">
-                                            <div class="post-title h5 font-weight-bold" @click="goToPost(post)">{{ post.title }}</div>
+                                            <div class="post-title h5 font-weight-bold" @click="goToPost(post, router)">{{ post.title }}</div>
                                         </div>
                                         <div class="post-body">
                                             <div class="post-content">{{ post.preview }}</div>
@@ -95,16 +91,16 @@ const sidePromotion = postStore.sidePromotion
                                 </div>
 
                                 <div 
-                                    class="post clearfix"
-                                    :class="[(postStore.heroPosts.length - 1) !== index && 'mb-3 pb-1 border-bottom']"
                                     v-for="(post, index) in postStore.heroPosts"
                                     :key="post.slug"
+                                    class="post clearfix"
+                                    :class="[(postStore.heroPosts.length - 1) !== index && 'mb-3 pb-1 border-bottom']"
                                 >
-                                    <div class="post-media float-left mr-3" @click="goToPost(post)">
+                                    <div class="post-media float-left mr-3" @click="goToPost(post, router)">
                                         <img :src="post.mediaUrl" width="75" />
                                     </div>
                                     <div class="post-header">
-                                        <div class="post-title h6 font-weight-bold" @click="goToPost(post)">{{ post.title }}</div>
+                                        <div class="post-title h6 font-weight-bold" @click="goToPost(post, router)">{{ post.title }}</div>
                                     </div>
                                 </div>
                             </div>

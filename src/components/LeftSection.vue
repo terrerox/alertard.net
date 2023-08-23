@@ -1,26 +1,22 @@
 <script setup>
 import { usePostStore } from '../store/posts'
-import { categoryTitles } from '../helpers';
+import { categoryTitles, goToPost } from '../helpers';
 import { useRouter } from 'vue-router';
 const router = useRouter()
-
-function goToPost(post) { 
-  router.push({ path: post.slug, query: { id: post.id } })
-}
 const postStore = usePostStore()
 </script>
 <template>
     <div class="col-12 order-1 order-lg-1 col-sm-5 col-lg-3 col-xl-2 border-right mb-3 mb-lg-0">
 
         <div 
-            class="post mb-3 pb-3"
-            :class="[index < 2 && 'border-bottom']"
             v-for="(post, index) in postStore.rightPosts"
             :key="post.slug"
+            class="post mb-3 pb-3"
+            :class="[index < 2 && 'border-bottom']"
         >
             <div class="post-header">
                 <div class="post-supertitle">{{ categoryTitles[post.category] }}</div>
-                <div class="post-title h4 font-weight-bold" @click="goToPost(post)">{{ post.title }}</div>
+                <div class="post-title h4 font-weight-bold" @click="goToPost(post, router)">{{ post.title }}</div>
             </div>
             <div class="post-body">
                 <div class="post-content">{{ post.preview }}</div>

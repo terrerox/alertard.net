@@ -1,27 +1,24 @@
 <script setup>
 import { usePostStore } from '../store/posts'
 import { useRouter } from 'vue-router';
+import { goToPost } from '../helpers';
 const router = useRouter()
-
-function goToPost(post) { 
-  router.push({ path: post.slug, query: { id: post.id } })
-}
 const postStore = usePostStore()
 </script>
 <template>
     <section class="col-12 order-3 order-lg-0 mb-3 mb-lg-4 mb-xl-5">
         <div class="row no-gutters home-top-headlines py-3 px-2 mb-3 mb-sm-0">
             <div 
-                class="col-12 col-sm-6 col-lg-3 mb-3 mb-lg-0"
                 v-for="post in postStore.heroPosts"
                 :key="post.slug"
+                class="col-12 col-sm-6 col-lg-3 mb-3 mb-lg-0"
             >
                 <div class="row align-items-center no-gutters">
                     <div class="col-auto">
-                        <img class="float-left mr-2" @click="goToPost(post)" :src="post.mediaUrl" width="50" />
+                        <img class="float-left mr-2" :src="post.mediaUrl" width="50" @click="goToPost(post, router)" />
                     </div>
                     <div class="col">
-                        <div class="font-weight-bold post-title" @click="goToPost(post)">{{post.title}}</div>
+                        <div class="font-weight-bold post-title" @click="goToPost(post, router)">{{post.title}}</div>
                         <div class="post-date">
                             <i class="fa fa-clock-o" aria-hidden="true"></i> {{ post.datetime }}
                         </div>

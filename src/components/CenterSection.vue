@@ -1,13 +1,9 @@
 <script setup>
 import { usePostStore } from '../store/posts'
 import { useRouter } from 'vue-router';
-import { categoryTitles } from '../helpers';
+import { categoryTitles, goToPost } from '../helpers';
 
 const router = useRouter()
-
-function goToPost(post) { 
-  router.push({ path: post.slug, query: { id: post.id } })
-}
 const mainPost = usePostStore().mainPost
 </script>
 <template>
@@ -16,9 +12,9 @@ const mainPost = usePostStore().mainPost
         <div class="post">
             <div class="post-header">
                 <div class="post-supertitle">{{ categoryTitles[mainPost.category] }}</div>
-                <div class="post-title h3 font-weight-bold" @click="goToPost(mainPost.slug)">{{ mainPost.title }}</div>
+                <div class="post-title h3 font-weight-bold" @click="goToPost(mainPost, router)">{{ mainPost.title }}</div>
             </div>
-            <div class="post-media" @click="goToPost(mainPost)">
+            <div class="post-media" @click="goToPost(mainPost, router)">
                 <img class="img-fluid" :src="mainPost.mediaUrl" />
             </div>
             <div class="post-body">

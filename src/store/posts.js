@@ -42,11 +42,6 @@ export const usePostStore = defineStore('posts', {
         advertisement,
         general
       } = assignImagesToSections(images.mediaItems.nodes)
-      console.log({
-        banner,
-        side,
-        advertisement,
-      })
 
       this.banner = banner;
       this.sidePromotion = side;

@@ -19,7 +19,7 @@ onMounted (
         <div v-if="postStore.isLoading" class="loader" style="margin-top: 5%;">
             <img src="../assets/loader.gif" />
         </div>
-        <main class="container" v-else>
+        <main v-else class="container">
             <div class="row">
                 <div class="col-xl-9 col-lg-8">
                     <article class="blog-post" itemScope itemType="http://schema.org/Article">
@@ -27,12 +27,12 @@ onMounted (
                             <h1 itemProp="headline">{{ postStore.post.title }}</h1>
                         </div>
                         <p>{{ postStore.post.datetime }}</p>
-                        <section class="media-section" v-show="postStore.post.mediaUrl">
-                            <video class="media-responsive" controls v-if="postStore.post.mediaType === 'VIDEO'">
+                        <section v-show="postStore.post.mediaUrl" class="media-section">
+                            <video v-if="postStore.post.mediaType === 'VIDEO'" class="media-responsive" controls>
                                 <source :src="postStore.post.mediaUrl" type="video/mp4">
                                 Your browser does not support HTML video.
                             </video>
-                            <img class="media-responsive" :src="postStore.post.mediaUrl" v-else />
+                            <img v-else class="media-responsive" :src="postStore.post.mediaUrl" />
                         </section>
                         <section itemProp="articleBody" class="entry-content">
                            <p> {{ postStore.post.description }} </p>

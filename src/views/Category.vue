@@ -43,10 +43,10 @@ watchEffect (
                         <div class="col-12 col-md-5 mb-3 mb-md-0">
 
                             <div 
-                                class="post"
-                                :class="[index === 0 && 'mb-3 pb-3 border-bottom']"
                                 v-for="(post, index) in postStore.postsByCategories.slice(0,2)"
                                 :key="post.slug"
+                                class="post"
+                                :class="[index === 0 && 'mb-3 pb-3 border-bottom']"
                             >
                                 <div class="post-media" @click="goToPost(post.slug)">
                                     <img class="img-fluid" :src="post.thumbnailUrl" />
@@ -65,10 +65,10 @@ watchEffect (
                         <div class="col-12 col-md-7">
 
                             <div 
-                                class="post mb-3 border-bottom"
                                 v-for="(post, index) in postStore.postsByCategories.slice(2, postStore.postsByCategories.length)"
-                                :class="[(postStore.postsByCategories.length - 1) === index ? 'mb-sm-0' : 'pb-3']"
                                 :key="post.slug"
+                                class="post mb-3 border-bottom"
+                                :class="[(postStore.postsByCategories.length - 1) === index ? 'mb-sm-0' : 'pb-3']"
                             >
                                 <div class="row">
                                     <div class="col-auto">
